@@ -1,0 +1,27 @@
+# Phase 4: Worker Node Groups
+
+## Why this step?
+The EKS cluster control plane is ready, but by itself it cannot run Pods.  
+We need **worker nodes** (EC2 instances) to join the cluster.  
+These nodes will:
+- Run our Kubernetes workloads.
+- Communicate with the control plane.
+- Pull container images from ECR or Docker Hub.
+- Scale based on demand.
+
+## What we built
+- **Managed Node Group**: `eks-node-group` running on EC2 instances (t3.medium).
+- **AutoScaling**: Configured with min 2 nodes, max 4 nodes.
+- **Node IAM Role**: Grants permissions for pulling images, networking (CNI), and writing logs to CloudWatch.
+- **Networking**: Nodes are launched in private subnets for security.
+
+## Benefits
+- Worker nodes are managed by AWS (patching, lifecycle, scaling).
+- Kubernetes workloads (Deployments, StatefulSets, Services) now have a place to run.
+- Integration with the VPC for secure networking.
+
+## Next step
+With nodes ready, we can:
+1. Configure `kubectl` to connect to the cluster:
+   ```bash
+   aws eks update-kubeconfig --region <your-region> --name eks-portfolio-cluster
