@@ -1,0 +1,22 @@
+# Phase 3: EKS Cluster Creation
+
+## Why this step?
+After networking (Phase 1) and IAM roles (Phase 2), the next step is to provision the **EKS control plane**.  
+This is the managed Kubernetes "master nodes" that AWS runs for us — including the API server and etcd database.
+
+- The cluster is attached to the **VPC and subnets** we created earlier.
+- The cluster uses the **IAM Cluster Role** from Phase 2 to interact with AWS resources.
+- At this stage, we only have the **control plane** — no worker nodes yet.
+
+## What we built
+- **EKS Cluster**: `eks-portfolio-cluster` running Kubernetes v1.30.
+- **Networking Config**: Connected to 2 public and 2 private subnets.
+- **Cluster Endpoint Access**: Public API enabled for easy connection via `kubectl`.
+
+## Benefits
+- Fully managed control plane → AWS handles scaling, patching, and HA.
+- Integrates with IAM for secure authentication.
+- Provides the Kubernetes API endpoint that `kubectl` will use.
+
+## Next step
+We need to create **Node Groups** (Phase 4) so our workloads (Pods, Deployments) can run on worker nodes.
