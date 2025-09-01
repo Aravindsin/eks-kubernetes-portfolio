@@ -1,0 +1,29 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: EKS Cluster
+
+Parameters:
+  VpcId:
+    Type: String
+  SubnetIds:
+    Type: List<String>
+  ClusterRoleArn:
+    Type: String
+
+Resources:
+  EKSCluster:
+    Type: AWS::EKS::Cluster
+    Properties:
+      Name: eks-portfolio-cluster
+      RoleArn: !Ref ClusterRoleArn
+      ResourcesVpcConfig:
+        SubnetIds: !Ref SubnetIds
+        EndpointPublicAccess: true
+        EndpointPrivateAccess: false
+      Version: "1.30" # latest stable version
+
+Outputs:
+  ClusterName:
+    Description: EKS Cluster Name
+    Value: !Ref EKSCluster
+    Export:
+      Name: eks-cluster-name
