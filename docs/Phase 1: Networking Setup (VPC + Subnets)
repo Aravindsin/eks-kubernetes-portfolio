@@ -1,0 +1,23 @@
+# Phase 1: Networking Setup (VPC + Subnets)
+
+## Why this step?
+Before deploying an EKS cluster, we need a secure and isolated network.  
+A **VPC** gives us control over IP ranges, subnets, and routing.  
+AWS EKS requires **at least 2 subnets across different Availability Zones** for high availability.
+
+## What we built
+- **VPC**: `10.0.0.0/16` — gives ~65k IPs.
+- **2 Public Subnets**: For Load Balancers, NAT.
+- **2 Private Subnets**: For worker nodes and Pods.
+- **Internet Gateway + Route Tables**: Allow internet access for public subnets.
+
+## Benefits
+- **Security**: Worker nodes run in private subnets (not exposed to the internet).
+- **Scalability**: Public subnets can host LoadBalancers to distribute traffic.
+- **Flexibility**: NAT gateways can be added for private subnets to reach the internet.
+
+## Next step
+With the networking layer ready, we will create:
+1. IAM roles for EKS
+2. EKS Cluster inside this VPC
+3. Node groups for workloads
