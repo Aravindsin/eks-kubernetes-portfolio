@@ -1,0 +1,6 @@
+# Phase 2: IAM Roles for EKS
+
+## Why this step?
+EKS requires **IAM roles** to manage the cluster and worker nodes securely.  
+Without these roles:
+- The **EKS control plane** cannot interact with AWS resources like networking (VPC, subnets, ENIs).
